@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fritz!Box.CommandsTests", "Fritz!Box.CommandsTests\Fritz!Box.CommandsTests.csproj", "{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3BDFBD1-BE73-4EC3-99E3-CD9286CFD8E8}
+	EndGlobalSection
+EndGlobal
