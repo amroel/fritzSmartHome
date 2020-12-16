@@ -299,8 +299,8 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
-# CodeRush personal settings
-.cr/personal
+# CodeRush folder 
+.cr/
 
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
