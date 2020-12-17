@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fritz!Box.CommandsTests", "Fritz!Box.CommandsTests\Fritz!Box.CommandsTests.csproj", "{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fritz!Box.CommandsTests", "Fritz!Box.CommandsTests\Fritz!Box.CommandsTests.csproj", "{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FritzSmartHome.FritzBox", "FritzSmartHome.FritzBox\FritzSmartHome.FritzBox.csproj", "{596CC6CB-9180-4717-9E72-392478873769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FritzSmartHome.FritzBox.Tests", "FritzSmartHome.FritzBox.Tests\FritzSmartHome.FritzBox.Tests.csproj", "{9A3FFD9A-6AED-4131-98BC-1847F5A2767C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E100A3F-3FA8-4309-B04E-876E69BCE8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{596CC6CB-9180-4717-9E72-392478873769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596CC6CB-9180-4717-9E72-392478873769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596CC6CB-9180-4717-9E72-392478873769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596CC6CB-9180-4717-9E72-392478873769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A3FFD9A-6AED-4131-98BC-1847F5A2767C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A3FFD9A-6AED-4131-98BC-1847F5A2767C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A3FFD9A-6AED-4131-98BC-1847F5A2767C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A3FFD9A-6AED-4131-98BC-1847F5A2767C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

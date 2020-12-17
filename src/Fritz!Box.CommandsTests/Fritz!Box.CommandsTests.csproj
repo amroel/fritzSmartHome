@@ -6,4 +6,8 @@
     <RootNamespace>FritzBox.CommandsTests</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FritzSmartHome.FritzBox\FritzSmartHome.FritzBox.csproj" />
+  </ItemGroup>
+
 </Project>

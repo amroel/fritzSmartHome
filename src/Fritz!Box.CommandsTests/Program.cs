@@ -1,7 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using FritzSmartHome.FritzBox;
 
 namespace FritzBox.CommandsTests
 {
@@ -19,9 +21,11 @@ namespace FritzBox.CommandsTests
 			var boxUrl = args[0];
 			var user = args[1];
 			var pass = args[2];
+			using var tokenSource = new CancellationTokenSource();
+			var cancellationToken = tokenSource.Token;
 			try
 			{
-				var sessionId = await LogIn(boxUrl, user, pass);
+				var sessionId = await LogIn(boxUrl, user, pass, cancellationToken);
 				Console.WriteLine($"Successfull login for user: {user}");
 				Console.WriteLine($"Session Id: {sessionId}");
 			}
@@ -31,16 +35,22 @@ namespace FritzBox.CommandsTests
 			}
 		}
 
-		private static async Task<string> LogIn(string boxUrl, string user, string pass)
+		private static async Task<SessionInfo> LogIn(string boxUrl, 
+			string user, 
+			string pass, 
+			CancellationToken cancellationToken = default)
 		{
 			//Get a sid by solving the PBKDF2 (or MD5) challenge-response process.
 			var url = new Uri(boxUrl + SID_ROUTE);
 			var logInRequest = WebRequest.Create(url);
 			using var logInResponse = await logInRequest.GetResponseAsync().ConfigureAwait(false);
-			using var responseStream = logInResponse.GetResponseStream();
-			using var reader = new StreamReader(responseStream);
-			var content = await reader.ReadToEndAsync(); 
-			return content;
+			SessionInfo sessionInfo = null;
+			await Task.Run(() =>
+			{
+				var logInResponseSerializer = new XmlSerializer(typeof(SessionInfo));
+				sessionInfo = (SessionInfo)logInResponseSerializer.Deserialize(logInResponse.GetResponseStream());
+			}, cancellationToken);
+			return sessionInfo;
 		}
 	}
 }
