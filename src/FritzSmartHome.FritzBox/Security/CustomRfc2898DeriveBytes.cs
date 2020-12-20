@@ -6,7 +6,7 @@ using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace FritzSmartHome.FritzBox
+namespace FritzSmartHome.FritzBox.Security
 {
 	// shamelessly stolen from dotnet/core repository to remove the 8 byte restriction on salt size!
 

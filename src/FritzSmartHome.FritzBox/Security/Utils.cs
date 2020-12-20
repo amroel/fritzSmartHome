@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace FritzSmartHome.FritzBox
+namespace FritzSmartHome.FritzBox.Security
 {
 #nullable enable
 
