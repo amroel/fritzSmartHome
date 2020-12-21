@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -35,7 +34,7 @@ namespace FritzSmartHome.FritzBox
 			try
 			{
 				var sessionId = await GetSessionId(cancellationToken);
-				var challengeResponse = sessionId.CreateChallengeResponder().CreateResponse(_settings.Password);
+				var challengeResponse = sessionId.CalculateChallengeResponse(_settings.Password);
 				if (sessionId.IsBlocked())
 				{
 					_logger.LogInformation($"Waiting for {sessionId.BlockTime} seconds...");
