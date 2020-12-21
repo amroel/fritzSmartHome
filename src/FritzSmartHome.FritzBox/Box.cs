@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -14,9 +15,15 @@ namespace FritzSmartHome.FritzBox
 {
 	public class Box : IFritzBox
 	{
-		private static readonly HttpClient CLIENT = new HttpClient();
-
+		private static readonly HttpClient CLIENT = new HttpClient(new HttpClientHandler
+		{
+			//commands are issues against https:// (ssl protcol) so
+			//ignore ssl errors for the moment. Need to investigate this further
+			ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+		});
 		private const string SID_ROUTE = "/login_sid.lua?version=2";
+		private const string COMMANDS_ROUTE = "/webservices/homeautoswitch.lua";
+
 		private readonly BoxSettings _settings;
 		private readonly ILogger _logger;
 		private readonly Uri _boxUrl;
@@ -25,9 +32,69 @@ namespace FritzSmartHome.FritzBox
 		public Box(IOptions<BoxSettings> options, ILogger<Box> logger)
 		{
 			_settings = options.Value;
-			_boxUrl = new Uri($"{_settings.Url}{SID_ROUTE}");
+			_boxUrl = new Uri($"{_settings.StartUrl}{SID_ROUTE}");
 			_logger = logger;
 		}
+
+		public async Task<DeviceList> ListDevices(CancellationToken cancellationToken)
+		{
+			if (NeedToLogin())
+				await LoginAsync(cancellationToken);
+
+			HttpResponseMessage response = null;
+			DeviceList result = null;
+			// Try to read device info page
+			try
+			{
+				var requestUri = new Uri($"{_settings.CommandsUrl}{COMMANDS_ROUTE}?sid={_sessionId.SID}&switchcmd=getdevicelistinfos");
+				response = await CLIENT.GetAsync(requestUri, cancellationToken).ConfigureAwait(false);
+			}
+			catch (HttpRequestException ex)
+			{
+				_logger.LogError($"Could not load uri. {ex}");
+			}
+			catch (TaskCanceledException)
+			{
+				_logger.LogError("Http GET timed out.");
+			}
+			catch (OperationCanceledException)
+			{
+				_logger.LogError("Http GET timed out.");
+			}
+			catch (InvalidOperationException ex)
+			{
+				_logger.LogError($"URI appears to be wrong. {ex}");
+			}
+
+			// If retrieving was successfull, get response
+			if (response?.StatusCode == HttpStatusCode.OK)
+			{
+				try
+				{
+					await Task.Run(async () =>
+					{
+						var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+						_logger.LogDebug($"Received response: {responseString}");
+						var responseSerializer = new XmlSerializer(typeof(DeviceList));
+						using var stream = new StringReader(responseString);
+						result = (DeviceList)responseSerializer.Deserialize(stream);
+					},
+					cancellationToken)
+						.ConfigureAwait(false);
+				}
+				catch (InvalidOperationException ex)
+				{
+					_logger.LogError($"Something went wrong parsing xml response: {ex}");
+				}
+
+				response?.Dispose();
+			}
+			return result;
+		}
+
+		private bool NeedToLogin() => _sessionId == default ||
+			string.IsNullOrWhiteSpace(_sessionId.SID) ||
+			long.Parse(_sessionId.SID) == 0;
 
 		public async Task LoginAsync(CancellationToken cancellationToken = default)
 		{

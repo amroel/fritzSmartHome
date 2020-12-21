@@ -18,7 +18,7 @@ namespace FritzBox.CommandsTests
 				{
 					services.Configure<BoxSettings>(hostContext.Configuration.GetSection("LocalFritzBox"));
 					services.AddHostedService<ConsoleWorker>();
-					services.AddTransient<IFritzBox, Box>();
+					services.AddSingleton<IFritzBox, Box>();
 				});
 	}
 }

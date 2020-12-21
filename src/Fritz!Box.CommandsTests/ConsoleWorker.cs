@@ -21,7 +21,7 @@ namespace FritzBox.CommandsTests
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
-			await _fritzBox.LoginAsync(stoppingToken);
+			await _fritzBox.ListDevices(stoppingToken);
 		}
 	}
 }
