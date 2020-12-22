@@ -87,6 +87,7 @@ namespace FritzSmartHome.FritzBox
 					_logger.LogError($"Something went wrong parsing xml response: {ex}");
 				}
 
+				_logger.LogInformation($"Got the following device list: {result}");
 				response?.Dispose();
 			}
 			return result;
